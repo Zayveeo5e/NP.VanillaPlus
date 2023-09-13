@@ -1,14 +1,40 @@
-# northstar-mod-template
-Northstar mod template for northstar.thunderstore.io compatible mods.
+# NP.VanillaPlus
+Patch for Northstar.Client to enable client-side mods on official servers.
 
-# READ!
+# THIS HAS A NON-STANDARD INSTALL PROCESS!
+This guide assumes you have standard Northstar installed already. If you don't, go install that and then come back here.
 
-Please change the folder name of Example.Mod to your mods name.
+# Install
 
-Please modify the manifest.json and mod.json and change everything to your mods needs.
-Make sure the version between them both is the same.
+1.) Create a folder in your `Titanfall2 Directory` called `R2Titanfall`
 
-Make sure you change the LICENSE file too, its currently a 
-MIT license and you need to change the COPYRIGHT_HOLDER to your name.
+2.) Inside of that folder, create another one called `mods`
 
-There is a empty example Squirrel script in mods/Example.Mod/mod/scripts/vscripts/. You likely want to rename and modify or replace that file.
+3.) place the `NP.VanillaPlus` folder inside of that folder
+
+4.) Download the latest release of Northstar and unzip it
+
+5.) Navigate into `Northstar/R2Northstar/mods` and copy `Northstar.Client` from there into the `mods` folder of the `R2Titanfall` folder we created earlier
+
+6.) It should look like this
+```
+Titanfall2
+  +R2Titanfall
+    +mods
+      +Northstar.Client
+      +NP.VanillaPlus
+```
+
+7.) Create a file called `R2Titanfall.txt`, open it and paste the following into it
+```
+start "G:\SteamLibrary\steamapps\common\Titanfall2" NorthstarLauncher.exe -norestrictservercommands -profile=R2Titanfall
+```
+Now save it and rename it to `R2Titanfall.bat`
+
+8.) Double click `R2Titanfall.bat` to launch the Vanilla+ Profile we just made
+
+# Install (Easier Alternative Method)
+
+1.) Download the latest Release and unzip it, then put the files from that zip in your `Titanfall2` folder (where the `Titanfall2.exe` is)
+
+2.) Double click `R2Titanfall.bat` to play Vanilla+
