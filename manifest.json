@@ -1,0 +1,9 @@
+{
+    "name": "ExampleMod",
+    "version_number": "0.0.1",
+    "website_url": "",
+    "description": "Example mod",
+    "dependencies": [
+        "northstar-Northstar-1.8.0"
+    ]
+}
