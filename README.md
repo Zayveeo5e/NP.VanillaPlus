@@ -32,7 +32,7 @@ Titanfall2
 7b.)
 - Create a file called `R2Titanfall.txt` anywhere on your system, open it and paste the following into it, changing `G:\SteamLibrary\steamapps\common\Titanfall2` to be your `Titanfall2 Directory`
 ```
-start "G:\SteamLibrary\steamapps\common\Titanfall2" NorthstarLauncher.exe -norestrictservercommands -profile=R2Titanfall
+start NorthstarLauncher.exe -norestrictservercommands -profile=R2Titanfall
 ```
 - Now save it and rename it to `R2Titanfall.bat`
 
