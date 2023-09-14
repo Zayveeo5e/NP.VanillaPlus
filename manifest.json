@@ -1,9 +1,9 @@
 {
     "name": "NP.VanillaPlus",
-    "version_number": "1.3.1",
+    "version_number": "1.3.3",
     "website_url": "https://github.com/Zayveeo5e/NP.VanillaPlus",
     "description": "Northstar.Client patch for official servers",
     "dependencies": [
-        "northstar-Northstar-1.18.1"
+        "northstar-Northstar-1.18.2"
     ]
 }
