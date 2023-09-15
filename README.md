@@ -2,7 +2,6 @@
 Patch for Northstar.Client to enable client-side mods on official servers.
 
 # THIS HAS A NON-STANDARD INSTALL PROCESS!
-This guide assumes you have standard Northstar installed already. If you don't, go install that and then come back here.
 
 # Install
 
@@ -27,10 +26,10 @@ Titanfall2
 
 7.) There are multiple ways you can launch this profile, the most convenient of which will be gone over
 
-7a.) Add `-northstar -profile=R2Titanfall` as launch options to Titanfall 2 on Steam, then launch Titanfall 2 from Steam
+7a.) Add `-northstar -norestrictservercommands -profile=R2Titanfall` as launch options to Titanfall 2 on Steam, then launch Titanfall 2 from Steam (recommended, as this will count hours and achievements, where as a `.bat` won't)
 
 7b.)
-- Create a file called `R2Titanfall.txt` anywhere on your system, open it and paste the following into it, changing `G:\SteamLibrary\steamapps\common\Titanfall2` to be your `Titanfall2 Directory`
+- Create a file called `R2Titanfall.txt` in your `Titanfall2` folder, then put the following text in:
 ```
 start NorthstarLauncher.exe -norestrictservercommands -profile=R2Titanfall
 ```
