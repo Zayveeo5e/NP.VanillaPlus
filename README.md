@@ -7,9 +7,9 @@ Patch for Northstar.Client to enable client-side mods on official servers.
 
 1.) Create a folder in your `Titanfall2 Directory` called `R2Titanfall`
 
-2.) Inside of that folder, create another one called `mods`
+2.) Inside of that folder, create one called `mods` and one called `packages`
 
-3.) Place the `NP.VanillaPlus` folder inside of that folder
+3.) Place the unzipped Thunderstore download of VanillaPlus in the `packages` folder
 
 4.) Download the latest release of Northstar and unzip it
 
@@ -21,6 +21,7 @@ Titanfall2
   +R2Titanfall
     +mods
       +Northstar.Client
+    +packages
       +NP.VanillaPlus
 ```
 
