@@ -1,9 +1,7 @@
 {
     "name": "VanillaPlus",
-    "version_number": "1.3.4",
+    "version_number": "2.0.0",
     "website_url": "https://github.com/Zayveeo5e/NP.VanillaPlus",
-    "description": "Northstar.Client patch for official servers",
-    "dependencies": [
-        "northstar-Northstar-1.18.2"
-    ]
+    "description": "Modified Northstar.Client to load Client-Side mods on Vanilla servers",
+    "dependencies": []
 }

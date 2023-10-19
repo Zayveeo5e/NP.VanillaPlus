@@ -1,0 +1,117 @@
+{
+  "Name" : "VanillaPlus",
+  "Description": "A stripped down and modified Northstar.Client mod that allows for client-side mod loading on official Respawn servers\n\nMade by Nanohm, remastered by Cyn",
+  "LoadPriority": -1,
+  "Version": "2.0",
+
+  "Dependencies": {
+		"HAS_CLIENT": "Northstar.Client",
+		"HAS_CUSTOM": "Northstar.Custom",
+		"HAS_CUSTOMSERVERS": "Northstar.CustomServers",
+    "HAS_MORESKINS": "MoreSkins-",
+    "HAS_DTFOV": "Max.DoubleTakeIronsightFOVFix",
+    "HAS_FRAMEWORK": "Peepee.TitanFramework"
+	},
+
+  "ConVars": [
+    {
+      "Name": "filter_mods",
+      "DefaultValue": "0"
+    },
+    {
+      "Name": "modlist_show_convars",
+      "DefaultValue": "0",
+      "Flags": 16777216
+    },
+    {
+      "Name": "modlist_reverse",
+      "DefaultValue": "0",
+      "Flags": 16777216
+    },
+    {
+      "Name": "core_remind",
+      "DefaultValue": "1"
+    },
+    {
+      "Name": "mod_remind",
+      "DefaultValue": "1"
+    }
+  ],
+
+  "Scripts": [
+  {
+    "Path": "ui/ns_menu_modmenu.nut",
+    "RunOn": "UI",
+    "UICallback": {
+      "Before": "AddNorthstarModMenu",
+      "After": "AddNorthstarModMenu_MainMenuFooter"
+    }
+  },
+  {
+    "Path": "client/ns_cl_chat.gnut",
+    "RunOn": "CLIENT"
+  },
+  {
+    "Path": "ui/menu_set_vanillaplus_version.nut",
+    "RunOn": "UI",
+    "UICallback": {
+      "After": "VP_SetVersionLabel"
+    }
+  },
+  {
+    "Path": "ui/ns_controller_prompts.nut",
+    "RunOn": "UI"
+  },
+  {
+    "Path": "ui/ns_modsettings_slider.nut",
+    "RunOn": "UI"
+  },
+  {
+    "Path": "ui/ns_menu_modsettings.nut",
+    "RunOn": "UI",
+    "UICallback":{
+      "Before": "AddModSettingsMenu"
+        }
+    },
+    {
+    "Path": "ui/ns_ui_mouse_capture.nut",
+    "RunOn": "UI"
+  },
+  {
+  	  "Path": "vanillaplus_ui_init.gnut",
+	    "RunOn": "UI",
+      "UICallback": {
+        "Before": "VanillaPlusUI_Init"
+	  }
+   },
+   {
+      "Path": "ui/check_mods.nut",
+      "RunOn": "UI",
+      "UICallback": {
+        "Before": "CheckModsVanillaPlus_Init"
+      }
+   },
+   {
+      "Path": "presence/ns_ui_presence.nut",
+      "RunOn": "UI",
+      "UICallback": {
+        "After": "NSUpdateGameStateUIStart"
+      }
+  },
+  {
+      "Path": "presence/ns_cl_presence.nut",
+      "RunOn": "CLIENT",
+      "ClientCallback": {
+        "After": "NSUpdateGameStateClientStart"
+      }
+      
+  },
+  {
+    "Path": "northstar_safe_io.gnut",
+    "RunOn": "CLIENT || UI"
+  }
+  ],
+    "Localisation": [
+      "resource/northstar_client_localisation_%language%.txt"
+  ]
+}
