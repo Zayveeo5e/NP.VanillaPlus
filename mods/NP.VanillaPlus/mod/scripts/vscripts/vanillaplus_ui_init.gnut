@@ -1,0 +1,16 @@
+#if !HAS_CLIENT && !HAS_CUSTOM && !HAS_CUSTOMSERVERS
+// no need to add vanilla plus stuff if its not gonna
+// be able to be used anyways
+
+global function VanillaPlusUI_Init
+
+// Note: A majority of this is taken from Northstar.Client
+void function VanillaPlusUI_Init()
+{
+    AddModTitle("Vanilla Plus Framework")
+    AddModCategory("Demo Settings")
+    AddConVarSettingEnum("demo_autoRecord", "Record Demos", ["No", "Yes"])
+    AddConVarSettingEnum("demo_playbackexactframes", "Playback Exact Frames", ["No", "Yes"])
+    AddConVarSettingEnum("demo_interpolateview", "Interpolate View", ["No", "Yes"])
+}
+#endif

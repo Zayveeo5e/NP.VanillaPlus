@@ -84,10 +84,8 @@ void function InitMainMenuPanel()
 	var multiplayerHeader = AddComboButtonHeader( comboStruct, headerIndex, "#MULTIPLAYER_ALLCAPS" )
 	file.mpButton = AddComboButton( comboStruct, headerIndex, buttonIndex++, "#MULTIPLAYER_LAUNCH" )
 	Hud_AddEventHandler( file.mpButton, UIE_CLICK, OnPlayMPButton_Activate )
-	file.fdButton = AddComboButton( comboStruct, headerIndex, buttonIndex++, "#MENU_LAUNCH_NORTHSTAR" )
+	file.fdButton = AddComboButton( comboStruct, headerIndex, buttonIndex++, "#GAMEMODE_COOP" )
 	Hud_AddEventHandler( file.fdButton, UIE_CLICK, OnPlayFDButton_Activate )
-	Hud_SetLocked( file.fdButton, true )
-	Hud_Hide( file.fdButton )
 
 	headerIndex++
 	buttonIndex = 0
@@ -138,7 +136,6 @@ void function InitMainMenuPanel()
 	//AddPanelFooterOption( file.panel, BUTTON_BACK, "", "", ClosePostGameMenu )
 
 	thread TrackInstallProgress()
-	UpdateCustomMainMenuPromos()
 }
 
 void function OnShowMainMenuPanel()
@@ -173,7 +170,7 @@ void function OnShowMainMenuPanel()
 	UpdateSPButtons()
 	SetConVarInt("mp_allowed", 1)
 	thread UpdatePlayButton( file.mpButton )
-	thread UpdatePlayButton( file.fdButton )
+	//thread UpdatePlayButton( file.fdButton )
 	thread MonitorTrialVersionChange()
 
 	#if DURANGO_PROG
@@ -433,20 +430,7 @@ void function UpdatePlayButton( var button )
 				Hud_SetLocked( file.mpButton, false )
 				file.mpButtonActivateFunc = LaunchMP
 			}
-			else if ( button == file.fdButton && GetConVarInt( "ns_has_agreed_to_send_token" ) != NS_AGREED_TO_SEND_TOKEN )
-			{
-				message = "#AUTHENTICATIONAGREEMENT_NO"
-				file.mpButtonActivateFunc = null
-			}
 
-			//isLocked = file.mpButtonActivateFunc == null ? true : false
-			if( button == file.fdButton )
-			{
-				message = "Northstar is non-functional on Vanilla+"
-				Hud_SetLocked( file.fdButton, true )
-			}
-			else
-				Hud_SetLocked( button, isLocked )
 		#endif
 
 		if ( Script_IsRunningTrialVersion() && !IsTrialPeriodActive() && file.mpButtonActivateFunc != LaunchGamePurchase )
@@ -459,7 +443,17 @@ void function UpdatePlayButton( var button )
 
 		ComboButton_SetText( file.mpButton, buttonText )
 
-		ComboButton_SetText( file.fdButton, "#MENU_LAUNCH_NORTHSTAR" )
+		if ( Hud_IsLocked( button ) || buttonText == "#MENU_GET_THE_FULL_GAME" )
+		{
+			ComboButton_SetText( file.fdButton, "" )
+			Hud_SetEnabled( file.fdButton, false )
+		}
+		else
+		{
+			ComboButton_SetText( file.fdButton, "#MULTIPLAYER_LAUNCH_FD" )
+			Hud_SetEnabled( file.fdButton, true )
+		}
+		//ComboButton_SetText( file.fdButton, "#MENU_LAUNCH_NORTHSTAR" )
 		//Hud_SetEnabled( file.fdButton, false )
 
 		if ( file.installing )
@@ -509,86 +503,17 @@ void function MainMenuButton_Activate( var button )
 		file.buttonData[buttonID].activateFunc.call( this )
 }
 
-void function TryUnlockNorthstarButton()
+void function OnPlayFDButton_Activate( var button )
 {
-	// unlock "Launch Northstar" button until you're authed with masterserver, are allowing insecure auth, or 7.5 seconds have passed
-	float time = Time()
+	if ( file.mpButtonActivateFunc == null )
+		printt( "file.mpButtonActivateFunc is null" )
 
-	while ( GetConVarInt( "ns_has_agreed_to_send_token" ) != NS_AGREED_TO_SEND_TOKEN || time + 10.0 > Time() )
+	if ( !Hud_IsLocked( button ) && file.mpButtonActivateFunc != null )
 	{
-		if ( ( NSIsMasterServerAuthenticated() && IsStryderAuthenticated() ) || GetConVarBool( "ns_auth_allow_insecure" ) )
-			break
-
-		WaitFrame()
+		Lobby_SetAutoFDOpen( true )
+		// Lobby_SetFDMode( true )
+		thread file.mpButtonActivateFunc()
 	}
-
-	Hud_SetLocked( file.fdButton, false )
-	Hud_SetLocked( file.mpButton, false )
-}
-
-void function OnPlayFDButton_Activate( var button ) // repurposed for launching northstar lobby
-{
-	if ( !Hud_IsLocked( button ) )
-	{
-		SetConVarBool( "ns_is_modded_server", true )
-		//SetConVarString( "communities_hostname", "" ) // disable communities due to crash exploits that are still possible through it
-		NSTryAuthWithLocalServer()
-		thread TryAuthWithLocalServer()
-	}
-}
-
-void function TryAuthWithLocalServer()
-{
-	DialogData dialogData
-	dialogData.showSpinner = true
-	dialogData.header = "#CONNECTING"
-	dialogData.message = "#DIALOG_AUTHENTICATING_MASTERSERVER" // probably isn't actually what's going on here but makes more sense to the user
-
-	AddDialogButton( dialogData, "#CANCEL", CancelNSLocalAuth )
-	AddDialogFooter( dialogData, "#A_BUTTON_SELECT" )
-
-	OpenDialog( dialogData )
-
-	while ( NSIsAuthenticatingWithServer() )
-	{
-		if( file.stopNSLocalAuth )
-		{
-			file.stopNSLocalAuth = false
-			return
-		}
-		WaitFrame()
-	}
-
-	if ( NSWasAuthSuccessful() )
-	{
-		NSCompleteAuthWithLocalServer()
-		if ( GetConVarString( "mp_gamemode" ) == "solo" )
-			SetConVarString( "mp_gamemode", "tdm" )
-
-		CloseAllDialogs()
-
-		ClientCommand( "setplaylist tdm" )
-		ClientCommand( "map mp_lobby" )
-	}
-	else 
-	{
-		CloseAllDialogs()
-
-		string reason = NSGetAuthFailReason()
-
-		DialogData dialogData
-		dialogData.image = $"ui/menu/common/dialog_error"
-		dialogData.header = "#ERROR"
-		dialogData.message = reason
-
-		AddDialogButton( dialogData, "#OK", null )
-		OpenDialog( dialogData )
-	}
-}
-
-void function CancelNSLocalAuth()
-{
-	file.stopNSLocalAuth = true
 }
 
 void function OnPlayMPButton_Activate( var button )
@@ -600,7 +525,6 @@ void function OnPlayMPButton_Activate( var button )
 	{
 		Lobby_SetAutoFDOpen( false )
 		// Lobby_SetFDMode( false )
-		SetConVarBool( "ns_is_modded_server", false )
 		thread file.mpButtonActivateFunc()
 	}
 }
@@ -794,9 +718,7 @@ void function TrackInstallProgress()
 
 bool function IsStryderAuthenticated()
 {
-	// We don't actually need to wait for Stryder response, because we don't care about it anyway
-	return true
-	//return GetConVarInt( "mp_allowed" ) != -1
+	return GetConVarInt( "mp_allowed" ) != -1
 }
 
 bool function IsStryderAllowingMP()
@@ -815,17 +737,6 @@ bool function HasLatestPatch()
 	return true
 }
 #endif // PS4_PROG
-
-// custom mainmenupromos stuff
-
-// nopping these
-void function UpdatePromoData()
-{
-}
-
-void function UICodeCallback_MainMenuPromosUpdated()
-{
-}
 
 enum eMainMenuPromoDataProperty
 {
@@ -847,32 +758,31 @@ enum eMainMenuPromoDataProperty
 	smallButton2ImageIndex
 }
 
-void function UpdateCustomMainMenuPromos()
+void function UpdatePromoData()
 {
-	NSRequestCustomMainMenuPromos()
-
-	thread UpdateCustomMainMenuPromosThreaded()
-}
-
-void function UpdateCustomMainMenuPromosThreaded()
-{
-	while ( !NSHasCustomMainMenuPromoData() )
-		WaitFrame()
+	file.promoData = GetMainMenuPromos()
 
 	UpdateWhatsNewData()
 	UpdateSpotlightData()
+}
+
+void function UICodeCallback_MainMenuPromosUpdated()
+{
+	printt( "MainMenuPromos updated" )
+
+	UpdatePromoData()
 }
 
 void function UpdateWhatsNewData()
 {
 	// file.promoData.newInfo_ImageIndex
 	//RuiSetString( file.whatsNew, "line1Text", "`2%$rui/menu/main_menu/whats_new_bulletpoint%`0 Updated Live Fire Maps!\n`2%$rui/menu/main_menu/whats_new_bulletpoint%`0 Prime Titans`0 in the Store\n`2%$rui/menu/main_menu/whats_new_bulletpoint% DOUBLE XP`0 weekend!" )//file.promoData.newInfo_Title1 )
-	RuiSetString( file.whatsNew, "line1Text", expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.newInfoTitle1 ) ) )
-	RuiSetString( file.whatsNew, "line2Text", expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.newInfoTitle2 ) ) )
-	RuiSetString( file.whatsNew, "line3Text", expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.newInfoTitle3 ) ) )
+	RuiSetString( file.whatsNew, "line1Text", file.promoData.newInfo_Title1 )
+	RuiSetString( file.whatsNew, "line2Text", file.promoData.newInfo_Title2 )
+	RuiSetString( file.whatsNew, "line3Text", file.promoData.newInfo_Title3 )
 
 	bool isVisible = true
-	if ( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.newInfoTitle1 ) == "" && NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.newInfoTitle2 ) == "" && NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.newInfoTitle3 ) == "" )
+	if ( file.promoData.newInfo_Title1 == "" && file.promoData.newInfo_Title2 == "" && file.promoData.newInfo_Title3 == "" )
 		isVisible = false
 
 	RuiSetBool( file.whatsNew, "isVisible", isVisible )
@@ -880,9 +790,9 @@ void function UpdateWhatsNewData()
 
 void function UpdateSpotlightData()
 {
-	SetSpotlightButtonData( file.spotlightButtons[0], expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.largeButtonUrl ) ), expect int( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.largeButtonImageIndex ) ), expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.largeButtonTitle ) ), expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.largeButtonText ) ) )
-	SetSpotlightButtonData( file.spotlightButtons[1], expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.smallButton1Url ) ), expect int( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.smallButton1ImageIndex ) ), expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.smallButton1Title ) ) )
-	SetSpotlightButtonData( file.spotlightButtons[2], expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.smallButton2Url ) ), expect int( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.smallButton2ImageIndex ) ), expect string( NSGetCustomMainMenuPromoData( eMainMenuPromoDataProperty.smallButton2Title ) ) )
+	SetSpotlightButtonData( file.spotlightButtons[0], file.promoData.largeButton_Url, file.promoData.largeButton_ImageIndex, file.promoData.largeButton_Title, file.promoData.largeButton_Text )
+	SetSpotlightButtonData( file.spotlightButtons[1], file.promoData.smallButton1_Url, file.promoData.smallButton1_ImageIndex, file.promoData.smallButton1_Title )
+	SetSpotlightButtonData( file.spotlightButtons[2], file.promoData.smallButton2_Url, file.promoData.smallButton2_ImageIndex, file.promoData.smallButton2_Title )
 }
 
 void function SetSpotlightButtonData( var button, string link, int imageIndex, string title, string details = "skip" )
@@ -941,10 +851,6 @@ void function SpotlightButton_Activate( var button )
 	}
 	else
 	{
-		// discord links don't work in origin overlay
-		if ( link.find( "https://discord.gg" ) == 0 || link == "https://northstar.tf/discord" || link == "https://northstar.tf/wiki" )
-			LaunchExternalWebBrowser( link, WEBBROWSER_FLAG_FORCEEXTERNAL )
-		else
-			LaunchExternalWebBrowser( link, WEBBROWSER_FLAG_MUTEGAME )
+		LaunchExternalWebBrowser( link, WEBBROWSER_FLAG_MUTEGAME )
 	}
 }

@@ -1,4 +1,9 @@
 untyped
+#if !HAS_CLIENT && !HAS_CUSTOM && !HAS_CUSTOMSERVERS
+// because we want Northstar to do its thing 
+// if the user has core mods
+
+// taken directly from Northstar.Client
 
 global function AddNorthstarModMenu
 global function AddNorthstarModMenu_MainMenuFooter
@@ -690,3 +695,4 @@ void function ReloadMods()
 	// note: the logic for this seems really odd, unsure why it doesn't seem to update, since the same code seems to get run irregardless of whether we've read weapon data before
 	ClientCommand( "uiscript_reset" )
 }
+#endif

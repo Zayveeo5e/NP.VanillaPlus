@@ -1,0 +1,30 @@
+untyped
+#if !HAS_CLIENT && !HAS_CUSTOM && !HAS_CUSTOMSERVERS
+// because we want Northstar to do its thing 
+// if the user has core mods
+
+// taken directly from Northstar.Client
+
+globalize_all_functions
+
+// This was added to VanillaPlus as a few mods use it
+void function Chat_NetworkWriteLine( string text )
+{
+    NSChatWriteLine( 0, text)
+}
+
+void function Chat_GameWriteLine( string text )
+{
+    NSChatWriteLine( 1, text)
+}
+
+void function Chat_NetworkWrite( string text )
+{
+    NSChatWrite( 0, text)
+}
+
+void function Chat_GameWrite( string text )
+{
+    NSChatWrite( 1, text )
+}
+#endif
