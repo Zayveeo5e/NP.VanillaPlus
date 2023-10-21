@@ -402,31 +402,31 @@ void function UpdatePlayButton( var button )
 
 			if ( !isOriginConnected )
 			{
-				printt("Checking Origin")
+				//printt("Checking Origin")
 				message = "#ORIGIN_IS_OFFLINE"
 				file.mpButtonActivateFunc = null
 			}
 			else if ( !isStryderAuthenticated )
 			{
-				printt("Checking Stryder")
+				//printt("Checking Stryder")
 				message = "#CONTACTING_RESPAWN_SERVERS"
 				file.mpButtonActivateFunc = null
 			}
 			else if ( button == file.mpButton && !isMPAllowed )
 			{
-				printt("Checking MP Perms")
+				//printt("Checking MP Perms")
 				message = "#MULTIPLAYER_NOT_AVAILABLE"
 				file.mpButtonActivateFunc = null
 			}
 			else if ( button == file.mpButton && !hasLatestPatch )
 			{
-				printt("Checking Patch")
+				//printt("Checking Patch")
 				message = "#ORIGIN_UPDATE_AVAILABLE"
 				file.mpButtonActivateFunc = null
 			}
 			else if ( button == file.mpButton )
 			{
-				printt("Shouldn't be null")
+				//printt("Shouldn't be null")
 				Hud_SetLocked( file.mpButton, false )
 				file.mpButtonActivateFunc = LaunchMP
 			}
