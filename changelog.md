@@ -1,3 +1,8 @@
+2.1
+- Fix infinite connecting bug introduced in 2.0
+- Allow user to disable main menu promos (in mod settings)
+- Allow user to change Vanilla+ logo transparency (in mod settings)
+
 2.0
 - Rework/rewrite of VanillaPlus
 - Restore FD functionality

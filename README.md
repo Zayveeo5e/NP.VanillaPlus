@@ -20,7 +20,7 @@ Patch for Northstar.Client to enable client-side mods on official servers.
 Titanfall2
   +R2Titanfall
     +packages
-      +NanohmProtogen-VanillaPlus-2.0.0
+      +NanohmProtogen-VanillaPlus-2.1.0
 ```
 
 Note that the folder in `packages` is NOT a `.zip` file
