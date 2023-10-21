@@ -402,31 +402,31 @@ void function UpdatePlayButton( var button )
 
 			if ( !isOriginConnected )
 			{
-				//printt("Checking Origin")
+				printt("Checking Origin")
 				message = "#ORIGIN_IS_OFFLINE"
 				file.mpButtonActivateFunc = null
 			}
 			else if ( !isStryderAuthenticated )
 			{
-				//printt("Checking Stryder")
+				printt("Checking Stryder")
 				message = "#CONTACTING_RESPAWN_SERVERS"
 				file.mpButtonActivateFunc = null
 			}
 			else if ( button == file.mpButton && !isMPAllowed )
 			{
-				//printt("Checking MP Perms")
+				printt("Checking MP Perms")
 				message = "#MULTIPLAYER_NOT_AVAILABLE"
 				file.mpButtonActivateFunc = null
 			}
 			else if ( button == file.mpButton && !hasLatestPatch )
 			{
-				//printt("Checking Patch")
+				printt("Checking Patch")
 				message = "#ORIGIN_UPDATE_AVAILABLE"
 				file.mpButtonActivateFunc = null
 			}
 			else if ( button == file.mpButton )
 			{
-				//printt("Shouldn't be null")
+				printt("Shouldn't be null")
 				Hud_SetLocked( file.mpButton, false )
 				file.mpButtonActivateFunc = LaunchMP
 			}
@@ -718,12 +718,12 @@ void function TrackInstallProgress()
 
 bool function IsStryderAuthenticated()
 {
-	return GetConVarInt( "mp_allowed" ) != -1
+	return true
 }
 
 bool function IsStryderAllowingMP()
 {
-	return GetConVarInt( "mp_allowed" ) == 1
+	return true
 }
 
 #if PS4_PROG
@@ -758,41 +758,11 @@ enum eMainMenuPromoDataProperty
 	smallButton2ImageIndex
 }
 
-void function UpdatePromoData()
-{
-	file.promoData = GetMainMenuPromos()
-
-	UpdateWhatsNewData()
-	UpdateSpotlightData()
-}
-
 void function UICodeCallback_MainMenuPromosUpdated()
 {
 	printt( "MainMenuPromos updated" )
 
 	UpdatePromoData()
-}
-
-void function UpdateWhatsNewData()
-{
-	// file.promoData.newInfo_ImageIndex
-	//RuiSetString( file.whatsNew, "line1Text", "`2%$rui/menu/main_menu/whats_new_bulletpoint%`0 Updated Live Fire Maps!\n`2%$rui/menu/main_menu/whats_new_bulletpoint%`0 Prime Titans`0 in the Store\n`2%$rui/menu/main_menu/whats_new_bulletpoint% DOUBLE XP`0 weekend!" )//file.promoData.newInfo_Title1 )
-	RuiSetString( file.whatsNew, "line1Text", file.promoData.newInfo_Title1 )
-	RuiSetString( file.whatsNew, "line2Text", file.promoData.newInfo_Title2 )
-	RuiSetString( file.whatsNew, "line3Text", file.promoData.newInfo_Title3 )
-
-	bool isVisible = true
-	if ( file.promoData.newInfo_Title1 == "" && file.promoData.newInfo_Title2 == "" && file.promoData.newInfo_Title3 == "" )
-		isVisible = false
-
-	RuiSetBool( file.whatsNew, "isVisible", isVisible )
-}
-
-void function UpdateSpotlightData()
-{
-	SetSpotlightButtonData( file.spotlightButtons[0], file.promoData.largeButton_Url, file.promoData.largeButton_ImageIndex, file.promoData.largeButton_Title, file.promoData.largeButton_Text )
-	SetSpotlightButtonData( file.spotlightButtons[1], file.promoData.smallButton1_Url, file.promoData.smallButton1_ImageIndex, file.promoData.smallButton1_Title )
-	SetSpotlightButtonData( file.spotlightButtons[2], file.promoData.smallButton2_Url, file.promoData.smallButton2_ImageIndex, file.promoData.smallButton2_Title )
 }
 
 void function SetSpotlightButtonData( var button, string link, int imageIndex, string title, string details = "skip" )
@@ -853,4 +823,36 @@ void function SpotlightButton_Activate( var button )
 	{
 		LaunchExternalWebBrowser( link, WEBBROWSER_FLAG_MUTEGAME )
 	}
+}
+
+// these are modified functions from vanilla
+// this is so the user can control if they want to see main menu promos
+
+void function UpdatePromoData()
+{
+	file.promoData = GetMainMenuPromos()
+
+	VP_ShouldShowPromos()
+}
+
+void function VP_ShouldShowPromos() {
+	if (GetConVarInt("menu_promos") == 1) {
+		// file.promoData.newInfo_ImageIndex
+		//RuiSetString( file.whatsNew, "line1Text", "`2%$rui/menu/main_menu/whats_new_bulletpoint%`0 Updated Live Fire Maps!\n`2%$rui/menu/main_menu/whats_new_bulletpoint%`0 Prime Titans`0 in the Store\n`2%$rui/menu/main_menu/whats_new_bulletpoint% DOUBLE XP`0 weekend!" )//file.promoData.newInfo_Title1 )
+		RuiSetString( file.whatsNew, "line1Text", file.promoData.newInfo_Title1 )
+		RuiSetString( file.whatsNew, "line2Text", file.promoData.newInfo_Title2 )
+		RuiSetString( file.whatsNew, "line3Text", file.promoData.newInfo_Title3 )
+
+		bool isVisible = true
+		if ( file.promoData.newInfo_Title1 == "" && file.promoData.newInfo_Title2 == "" && file.promoData.newInfo_Title3 == "" )
+			isVisible = false
+
+		RuiSetBool( file.whatsNew, "isVisible", isVisible )
+
+	SetSpotlightButtonData( file.spotlightButtons[0], file.promoData.largeButton_Url, file.promoData.largeButton_ImageIndex, file.promoData.largeButton_Title, file.promoData.largeButton_Text )
+	SetSpotlightButtonData( file.spotlightButtons[1], file.promoData.smallButton1_Url, file.promoData.smallButton1_ImageIndex, file.promoData.smallButton1_Title )
+	SetSpotlightButtonData( file.spotlightButtons[2], file.promoData.smallButton2_Url, file.promoData.smallButton2_ImageIndex, file.promoData.smallButton2_Title )
+	}
+	else
+		return
 }

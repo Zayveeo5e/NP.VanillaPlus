@@ -587,7 +587,7 @@ void function UpdateTrialLabel()
 	//bool isTrialVersion
 	//bool lastIsTrialVersion = Script_IsRunningTrialVersion()
 
-	Hud_SetColor( file.trialLabel, 255, 255, 255, 255 )
+	Hud_SetColor( file.trialLabel, 255, 255, 255, GetConVarInt("vp_title_transparency"))
 	Hud_SetText( file.trialLabel, "Vanilla+" )
 	Hud_SetVisible( file.trialLabel, true )
 
