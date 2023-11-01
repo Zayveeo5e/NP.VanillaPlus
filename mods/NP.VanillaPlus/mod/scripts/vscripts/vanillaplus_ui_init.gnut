@@ -24,7 +24,8 @@ void function VanillaPlusUI_Init()
 
     AddModCategory("General settings")
     AddConVarSettingEnum("menu_promos", "Display promos on the main menu (requires mod reloading)", ["No", "Yes"])
-    ModSettings_AddSetting("vp_title_transparency", "Transparency of the Vanilla+ logo on the menu(requires mod reloading)", "int")
+    ModSettings_AddSetting("vp_title_transparency", "Transparency of the Vanilla+ logo on the menu (requires mod reloading)", "int")
+    //ModSettings_AddSliderSetting("vp_title_transparency", "Transparency of the Vanilla+ logo on the main menu", 0.0, 255.0, 10.0, true)
 
     AddModCategory("Demo Settings")
     AddConVarSettingEnum("demo_autoRecord", "Record Demos", ["No", "Yes"])
