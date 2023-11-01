@@ -2,7 +2,7 @@
   "Name" : "VanillaPlus",
   "Description": "A stripped down and modified Northstar.Client mod that allows for client-side mod loading on official Respawn servers\n\nMade by Nanohm, remastered by Cyn",
   "LoadPriority": -1,
-  "Version": "2.1",
+  "Version": "2.2",
 
   "Dependencies": {
 		"HAS_CLIENT": "Northstar.Client",
@@ -38,11 +38,13 @@
     },
     {
       "Name": "menu_promos",
-      "DefaultValue": "1"
+      "DefaultValue": "1",
+      "Flags": 16777216
     },
     {
       "Name": "vp_title_transparency",
-      "DefaultValue": "155"
+      "DefaultValue": "155",
+      "Flags": 16777216
     }
   ],
 

@@ -1,3 +1,8 @@
+2.2
+- Fix Mod Settings not showing up in the in game menu
+- Re-add slightly modified `_items.nut` from Northstar.CustomServers for some mods that use its functions (the one brought to my attention being Blue Fire)
+- Make Vanilla+ convars save to profile.cfg (so they don't need to be set every time... I should've done this originally...)
+
 2.1
 - Fix infinite connecting bug introduced in 2.0
 - Allow user to disable main menu promos (in mod settings)

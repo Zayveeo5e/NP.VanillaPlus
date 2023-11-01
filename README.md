@@ -5,7 +5,7 @@ Patch for Northstar.Client to enable client-side mods on official servers.
 
 # Installation
 
-## If you installed an older version of VanillaPlus in the `mods` directory, delete it and Northstar.Client!
+## If you installed an older version of the mod, delete it before installing the new one! If you still have a version with `Northstar.Client` installed in the `mods` directory, delete that too!
 
 1.) [Install Northstar](https://r2northstar.gitbook.io/r2northstar-wiki/installing-northstar/basic-setup) if you don't already have it
 
@@ -18,9 +18,9 @@ Patch for Northstar.Client to enable client-side mods on official servers.
 5.) It should look like this
 ```
 Titanfall2
-  +R2Titanfall
-    +packages
-      +NanohmProtogen-VanillaPlus-2.1.0
+  R2Titanfall
+    packages
+      NanohmProtogen-VanillaPlus-2.2.0
 ```
 
 Note that the folder in `packages` is NOT a `.zip` file
@@ -36,7 +36,7 @@ start NorthstarLauncher.exe -norestrictservercommands -profile=R2Titanfall
 ```
 - Now save it and rename it to `R2Titanfall.bat`
 
-- Double click `R2Titanfall.bat` to launch the Vanilla+ Profile we just made. Open the EA App first if you use this method, otherwise it most likely won't work
+- Double click `R2Titanfall.bat` to launch the Vanilla+ profile we just made. Open the EA App first if you use this method, otherwise it most likely won't work
 
 # Installing additional mods
 
@@ -50,4 +50,4 @@ For both ways, remember to also download dependencies listed in the mod page (ig
 
 1.) Download the [latest GitHub Release](https://github.com/Zayveeo5e/NP.VanillaPlus/releases/latest) and unzip it, then put the files from that zip in your `Titanfall2` folder (where the `Titanfall2.exe` is)
 
-2.) Double click `R2Titanfall.bat` to play Vanilla+
+2.) Double click `R2Titanfall.bat` to play Vanilla+. Open the EA App first if you use this method, otherwise it most likely won't work
