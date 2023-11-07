@@ -1,4 +1,5 @@
 untyped
+#if !HAS_CLIENT && !HAS_CUSTOM && !HAS_CUSTOMSERVERS
 
 global function AddCallback_OnReceivedSayTextMessage
 
@@ -142,3 +143,4 @@ void function AddCallback_OnReceivedSayTextMessage( ClClient_MessageStruct funct
 {
 	NsCustomCallbacksClient.OnReceivedSayTextMessageCallbacks.append(callbackFunc)
 }
+#endif
