@@ -1,3 +1,7 @@
+2.3 
+- Re-add files to make mods such as Khalmee's Speech Bubbles work
+- Fix error introduced by plugins v3 in Northstar
+
 2.2
 - Fix Mod Settings not showing up in the in game menu
 - Re-add slightly modified `_items.nut` from Northstar.CustomServers for some mods that use its functions (the one brought to my attention being Blue Fire)

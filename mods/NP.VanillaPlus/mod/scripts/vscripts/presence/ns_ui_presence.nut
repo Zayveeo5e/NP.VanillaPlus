@@ -3,24 +3,33 @@ untyped
 
 globalize_all_functions
 
-// this struct is taken from cl_northstar_client_init
+// these structs are taken from cl_northstar_client_init
 // otherwise, this file is directly the same as 
 // the one from Northstar.Client
 
-struct UIPresenceStruct {
-	bool isLoading
-	bool isLobby
-	string loadingLevel
-	string loadedLevel
+global struct UIPresenceStruct {
+    int gameState
 }
 
-void function NorthstarCodeCallback_GenerateUIPresence() {
-	UIPresenceStruct uis
+global enum eDiscordGameState
+{
+    LOADING = 0
+    MAINMENU
+    LOBBY
+    INGAME
+}
 
-	uis.isLoading = uiGlobal.isLoading
-	uis.isLobby = IsLobby()
-	uis.loadingLevel = uiGlobal.loadingLevel
-	uis.loadedLevel = uiGlobal.loadedLevel
-	NSPushUIPresence(uis)
+UIPresenceStruct function DiscordRPC_GenerateUIPresence( UIPresenceStruct uis )
+{
+	if ( uiGlobal.isLoading )
+		uis.gameState = eDiscordGameState.LOADING;
+	else if ( uiGlobal.loadedLevel == "" )
+		uis.gameState = eDiscordGameState.MAINMENU;
+	else if ( IsLobby() || uiGlobal.loadedLevel == "mp_lobby" )
+		uis.gameState = eDiscordGameState.LOBBY;
+	else
+		uis.gameState = eDiscordGameState.INGAME;
+
+	return uis
 }
 #endif
