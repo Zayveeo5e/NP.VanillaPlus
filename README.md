@@ -1,6 +1,8 @@
 # VanillaPlus
 Patch for Northstar.Client to enable client-side mods on official servers.
 
+If you're having issues with the mod, please read [FAQ.md](FAQ.md) as most of the common issues can be found there.
+
 # THIS HAS A NON-STANDARD INSTALL PROCESS!
 
 # Installation
@@ -20,7 +22,7 @@ Patch for Northstar.Client to enable client-side mods on official servers.
 Titanfall2
   R2Titanfall
     packages
-      NanohmProtogen-VanillaPlus-2.2.0
+      NanohmProtogen-VanillaPlus-2.3.0
 ```
 
 Note that the folder in `packages` is NOT a `.zip` file
