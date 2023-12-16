@@ -5,6 +5,11 @@ If you see this, please read it before asking for help.
 Chances are, your issue is in here. 
 However, if you can't figure it out, feel free to ask for help.
 
+## COMPILE ERROR Undefined variable "VANILLA"
+
+This is because the current VanillaPlus setup uses the `-vanilla` launch option, which was added in Northstar 1.21.0
+Update Northstar to the newest version to solve the issue.
+
 ## COMPILE ERROR Undefined variable "AddModTitle"
 
 This error comes up if Vanilla+ is not properly installed or enabled. 
