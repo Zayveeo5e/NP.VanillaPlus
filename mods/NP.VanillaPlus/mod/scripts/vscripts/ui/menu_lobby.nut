@@ -322,9 +322,12 @@ void function SetupComboButtonTest( var menu )
 		var soundButton = AddComboButton( comboStruct, headerIndex, buttonIndex++, "#VIDEO" )
 		Hud_AddEventHandler( soundButton, UIE_CLICK, AdvanceMenuEventHandler( GetMenu( "VideoMenu" ) ) )
 	#endif
+
+	#if VANILLA
 	// MOD SETTINGS
 	var modSettingsButton = AddComboButton( comboStruct, headerIndex, buttonIndex++, "#MOD_SETTINGS" )
 	Hud_AddEventHandler( modSettingsButton, UIE_CLICK, AdvanceMenuEventHandler( GetMenu( "ModSettings" ) ) )
+	#endif
 
 	comboStruct.navUpButtonDisabled = true
 	comboStruct.navDownButton = file.genUpButton

@@ -102,9 +102,11 @@ void function InitMainMenuPanel()
 		Hud_AddEventHandler( videoButton, UIE_CLICK, AdvanceMenuEventHandler( GetMenu( "VideoMenu" ) ) )
 	#endif
 
+	#if VANILLA
 	// MOD SETTINGS
 	var modSettingsButton = AddComboButton( comboStruct, headerIndex, buttonIndex++, "#MOD_SETTINGS" )
 	Hud_AddEventHandler( modSettingsButton, UIE_CLICK, AdvanceMenuEventHandler( GetMenu( "ModSettings" ) ) )
+	#endif
 
 	var spotlightLargeButton = Hud_GetChild( file.spotlightPanel, "SpotlightLarge" )
 	spotlightLargeButton.SetNavLeft( file.spButtons[0] )

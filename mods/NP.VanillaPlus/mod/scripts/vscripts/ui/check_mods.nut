@@ -14,14 +14,26 @@ void function CheckForMods()
 {
     WaitFrame()
 
-    if (!VANILLA) {
-        // Prints an error if the user isn't in vanilla compatibilty mode
-        // Mostly to be used with Spectre log reading later (hence the 0)
-        printt("VanillaPlus Error 0: Not in vanilla compatibility mode")
-        if (GetConVarInt("core_remind") == 1) CoreMods()
+    if (!VANILLA) 
+    {
+        if (!HAS_CLIENT)
+        {
+            // if the user isn't in vanilla compat, has vanillaplus, and doesn't have client, they're basically 99% guaranteed to be using -norestrictservercommands still
+            // this checks we don't have client because having only client on 2.0+ causes a compile error
+            printt("VanillaPlus Error 1: Using -norestrictservercommands instead of -vanilla")
+            if (GetConVarInt("norestrictservercommands_remind") == 1) UpdateToUsingVanillaLaunchOption()
+        }    
+        else
+        {
+            // Prints an error if the user isn't in vanilla compatibilty mode
+            // Mostly to be used with Spectre log reading later (hence the 0)
+            printt("VanillaPlus Error 0: Not in vanilla compatibility mode")
+            if (GetConVarInt("core_remind") == 1) CoreMods()
+        }
     }
 
-    else if (HAS_MORESKINS || HAS_FRAMEWORK) {
+    else if (HAS_MORESKINS || HAS_FRAMEWORK) 
+    {
         OtherMods()
     }
 }
@@ -63,5 +75,21 @@ void function CoreMods()
 
     })
 	AddDialogButton(coreModWarnDiag, "Continue to Northstar servers", void function(){ClientCommand("uiscript_reset"); ClientCommand("core_remind 0")})
+    OpenDialog(coreModWarnDiag)
+}
+
+void function UpdateToUsingVanillaLaunchOption()
+{
+    DialogData coreModWarnDiag
+    coreModWarnDiag.header = "Not using vanilla compatibiltiy mode!"
+
+    coreModWarnDiag.message = "You aren't using Northstar's vanilla compatibility mode!\n\nIt seems that you're still using the launch option '-norestrictservercommands'.\n\nRecently, a better version of vanilla using the launch option '-vanilla' has come out.\n\nPlease update to that.\n\nYou can read the instructions for how to properly do it again, or you can continue to using VanillaPlus as is, altough it isn't recommended."
+
+    coreModWarnDiag.image = $"ui/menu/common/dialog_error"
+    AddDialogButton(coreModWarnDiag, "Go to instructions", void function(){
+        LaunchExternalWebBrowser("https://northstar.thunderstore.io/package/NanohmProtogen/VanillaPlus/", WEBBROWSER_FLAG_FORCEEXTERNAL); ClientCommand("uiscript_reset"); ClientCommand("core_remind 0")
+
+    })
+	AddDialogButton(coreModWarnDiag, "Continue to not recommended VanillaPlus", void function(){ClientCommand("uiscript_reset"); ClientCommand("norestrictservercommands_remind 0")})
     OpenDialog(coreModWarnDiag)
 }

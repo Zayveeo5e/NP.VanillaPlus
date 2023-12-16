@@ -1,3 +1,6 @@
+2.4.1
+- Add warning to migrate to `-vanilla` if the user is still on `-norestrictservercommands`
+
 2.4
 - Update VanillaPlus to use `-vanilla` as `-norestrictservercommands` is deprecated
 - Remove DT fov mod warning
