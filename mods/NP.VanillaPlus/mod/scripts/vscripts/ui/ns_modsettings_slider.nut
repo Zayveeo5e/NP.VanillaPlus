@@ -1,6 +1,6 @@
-#if !HAS_CLIENT && !HAS_CUSTOM && !HAS_CUSTOMSERVERS
+#if VANILLA
 // because we want Northstar to do its thing 
-// if the user has core mods
+// only run if in vanilla compatibility
 
 // taken directly from Northstar.Client
 

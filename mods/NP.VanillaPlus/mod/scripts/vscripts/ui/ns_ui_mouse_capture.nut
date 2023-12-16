@@ -1,7 +1,7 @@
 untyped // untyped purely so I can index into a table with var
-#if !HAS_CLIENT && !HAS_CUSTOM && !HAS_CUSTOMSERVERS
+#if VANILLA
 // because we want Northstar to do its thing 
-// if the user has core mods
+// only run if in vanilla compatibility
 
 global function AddMouseMovementCaptureHandler
 global function UICodeCallback_MouseMovementCapture

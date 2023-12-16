@@ -1,12 +1,12 @@
-#if !HAS_CLIENT && !HAS_CUSTOM && !HAS_CUSTOMSERVERS
-// no need to add vanilla plus stuff if its not gonna
-// be able to be used anyways
-
 global function VanillaPlusUI_Init
 
 void function VanillaPlusUI_Init()
 {
-    // this is here because if the user hasnt used northstar before
+    #if VANILLA
+    // no need to add vanilla plus stuff if its not gonna
+    // be able to be used anyways
+
+    // the token stuff is here because if the user hasnt used northstar before
     // they'll get infinite matchmaking in vanilla
     // this is baked into northstar.dll, so it can't easily be removed
 
@@ -25,11 +25,10 @@ void function VanillaPlusUI_Init()
     AddModCategory("General settings")
     AddConVarSettingEnum("menu_promos", "Display promos on the main menu (requires mod reloading)", ["No", "Yes"])
     ModSettings_AddSetting("vp_title_transparency", "Transparency of the Vanilla+ logo on the menu (requires mod reloading)", "int")
-    //ModSettings_AddSliderSetting("vp_title_transparency", "Transparency of the Vanilla+ logo on the main menu", 0.0, 255.0, 10.0, true)
 
     AddModCategory("Demo Settings")
     AddConVarSettingEnum("demo_autoRecord", "Record Demos", ["No", "Yes"])
     AddConVarSettingEnum("demo_playbackexactframes", "Playback Exact Frames", ["No", "Yes"])
     AddConVarSettingEnum("demo_interpolateview", "Interpolate View", ["No", "Yes"])
+    #endif
 }
-#endif

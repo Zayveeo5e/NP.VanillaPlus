@@ -1,3 +1,9 @@
+2.4
+- Update VanillaPlus to use `-vanilla` as `-norestrictservercommands` is deprecated
+- Remove DT fov mod warning
+- Clean up some unused code
+- Fix core mod warning not going away
+
 2.3 
 - Re-add files to make mods such as Khalmee's Speech Bubbles work
 - Fix error introduced by plugins v3 in Northstar

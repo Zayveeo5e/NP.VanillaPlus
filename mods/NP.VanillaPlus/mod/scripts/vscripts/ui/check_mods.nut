@@ -6,6 +6,7 @@ global function CheckModsVanillaPlus_Init
 
 void function CheckModsVanillaPlus_Init()
 {
+    // this is just to wait a frame so the game doesn't get upset
     thread CheckForMods()
 }
 
@@ -13,14 +14,14 @@ void function CheckForMods()
 {
     WaitFrame()
 
-    if (HAS_CLIENT || HAS_CUSTOM || HAS_CUSTOMSERVERS) {
-        if(GetConVarInt("core_remind") == 1) {
-            CoreMods()
-        }
-        else return
+    if (!VANILLA) {
+        // Prints an error if the user isn't in vanilla compatibilty mode
+        // Mostly to be used with Spectre log reading later (hence the 0)
+        printt("VanillaPlus Error 0: Not in vanilla compatibility mode")
+        if (GetConVarInt("core_remind") == 1) CoreMods()
     }
 
-    else if (HAS_MORESKINS || HAS_DTFOV || HAS_FRAMEWORK) {
+    else if (HAS_MORESKINS || HAS_FRAMEWORK) {
         OtherMods()
     }
 }
@@ -29,11 +30,6 @@ void function OtherMods()
 {
     DialogData warnDiag
     warnDiag.header = "Some mods you have installed don't work with VanillaPlus!"
-
-    if (HAS_DTFOV) {
-        ClientCommand("mod_remind 1")
-        warnDiag.message = "You have Double Take FOV installed!\n\nDouble Take FOV simply doesn't get changed on Vanilla. It won't stop the game from working, but it won't do anything"
-    }
 
     if (HAS_MORESKINS) {
         ClientCommand("mod_remind 1")
@@ -55,17 +51,17 @@ void function OtherMods()
 }
 
 void function CoreMods()
-{
+{    
     DialogData coreModWarnDiag
-    coreModWarnDiag.header = "Northstar core mods installed!"
+    coreModWarnDiag.header = "Not using vanilla compatibiltiy mode!"
 
-    coreModWarnDiag.message = "You have core mods installed!\n\nVanillaPlus requires that you follow it's instructions properly to install it!\n\nIgnoring will continue to Northstar servers!"
+    coreModWarnDiag.message = "You aren't using Northstar's vanilla compatibility mode!\n\nVanillaPlus requires that you follow it's instructions properly to install it!\n\nIgnoring will continue to Northstar servers!"
 
     coreModWarnDiag.image = $"ui/menu/common/dialog_error"
     AddDialogButton(coreModWarnDiag, "Go to instructions", void function(){
         LaunchExternalWebBrowser("https://northstar.thunderstore.io/package/NanohmProtogen/VanillaPlus/", WEBBROWSER_FLAG_FORCEEXTERNAL); ClientCommand("uiscript_reset"); ClientCommand("core_remind 0")
 
     })
-	AddDialogButton(coreModWarnDiag, "No thanks", void function(){ClientCommand("uiscript_reset"); ClientCommand("core_remind 0")})
+	AddDialogButton(coreModWarnDiag, "Continue to Northstar servers", void function(){ClientCommand("uiscript_reset"); ClientCommand("core_remind 0")})
     OpenDialog(coreModWarnDiag)
 }

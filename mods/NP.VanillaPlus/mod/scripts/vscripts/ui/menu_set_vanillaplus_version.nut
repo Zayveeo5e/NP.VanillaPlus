@@ -1,6 +1,7 @@
 untyped
-#if !HAS_CLIENT && !HAS_CUSTOM && !HAS_CUSTOMSERVERS
-// because if we have core mods we wanna have Northstar do its version
+#if VANILLA
+// because we want Northstar to do its thing 
+// only run if in vanilla compatibility
 
 global function VP_SetVersionLabel
 

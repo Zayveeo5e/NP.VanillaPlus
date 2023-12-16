@@ -1,8 +1,6 @@
 # VanillaPlus
 Patch for Northstar.Client to enable client-side mods on official servers.
 
-If you're having issues with the mod, please read [FAQ.md](FAQ.md) as most of the common issues can be found there.
-
 # THIS HAS A NON-STANDARD INSTALL PROCESS!
 
 # Installation
@@ -22,19 +20,19 @@ If you're having issues with the mod, please read [FAQ.md](FAQ.md) as most of th
 Titanfall2
   R2Titanfall
     packages
-      NanohmProtogen-VanillaPlus-2.3.0
+      NanohmProtogen-VanillaPlus-2.4.0
 ```
 
 Note that the folder in `packages` is NOT a `.zip` file
 
-6.) There are multiple ways you can launch this profile. You only need to do one of these, and it's recommend you do 6a.
+6.) There are multiple ways you can launch this profile. You only need to do one of these, and it's recommend you do `6a`.
 
-6a.) Add `-northstar -norestrictservercommands -profile=R2Titanfall` as [launch options](https://r2northstar.gitbook.io/r2northstar-wiki/installing-northstar/troubleshooting#launch-opts) to Titanfall 2 on Steam or EA, then launch Titanfall 2 from Steam or EA (recommended, as this will count hours and achievements, where as a `.bat` won't)
+6a.) Add `-northstar -vanilla -profile=R2Titanfall` as [launch options](https://r2northstar.gitbook.io/r2northstar-wiki/installing-northstar/troubleshooting#launch-opts) to Titanfall 2 on Steam or EA, then launch Titanfall 2 from Steam or EA (recommended, as this will count hours and achievements, where as a `.bat` won't)
 
 6b.)
 - Create a file called `R2Titanfall.txt` in your `Titanfall2` folder, then put the following text in:
 ```
-start NorthstarLauncher.exe -norestrictservercommands -profile=R2Titanfall
+NorthstarLauncher.exe -northstar -vanilla -profile=R2Titanfall
 ```
 - Now save it and rename it to `R2Titanfall.bat`
 

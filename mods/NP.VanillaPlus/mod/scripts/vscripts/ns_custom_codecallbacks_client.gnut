@@ -1,5 +1,7 @@
 untyped
-#if !HAS_CLIENT && !HAS_CUSTOM && !HAS_CUSTOMSERVERS
+#if VANILLA
+// because we want Northstar to do its thing 
+// only run if in vanilla compatibility
 
 global function AddCallback_OnReceivedSayTextMessage
 
