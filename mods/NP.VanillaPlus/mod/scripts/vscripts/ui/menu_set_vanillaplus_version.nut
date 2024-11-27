@@ -9,6 +9,12 @@ void function VP_SetVersionLabel()
 {
         var mainMenu = GetMenu( "MainMenu" ) //Gets main menu element
         var versionLabel = GetElementsByClassname( mainMenu, "nsVersionClass" )[0] //Gets the label from the mainMenu element.
-        Hud_SetText( versionLabel, NSGetModVersionByModName("VanillaPlus")) //Sets the label text (Getting version from VanillaPlus)
+        array<ModInfo> infos = NSGetModInformation( "VanillaPlus" )
+        foreach ( ModInfo modInfo in infos )
+        {
+                //Todo: handle multiple copies of v+
+                Hud_SetText( versionLabel, modInfo.version) //Sets the label text (Getting version from VanillaPlus)
+                break
+        }
 }
 #endif
